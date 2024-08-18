@@ -19,8 +19,7 @@ public class CakeService {
     }
 
     public Cake create(Cake cake) {
-        Cake newCake = new Cake(cake.getType(), cake.getFrosting(), cake.getFrostingColor(), cake.getLayers(), cake.getHasTopping(), cake.getHasFruit(), cake.getIsTiered());
-        return cakeRepository.save(newCake);
+        return cakeRepository.save(cake);
     }
 
     public List<Cake> getAll() {
@@ -35,12 +34,8 @@ public class CakeService {
         return optionalCake.get();
     }
 
-    public Cake getByType(String type) {
-        Optional<Cake> optionalCake = cakeRepository.findByType(type);
-        if (optionalCake.isEmpty()) {
-            throw new CakeNotFoundException("A cake with type: " + type + " was not found.");
-        }
-        return optionalCake.get();
+    public List<Cake> getByType(String type) {
+        return cakeRepository.findByType(type);
     }
 
     public Cake update(Cake cake, UUID id) {
@@ -48,8 +43,8 @@ public class CakeService {
         if (originalCake.isEmpty()) {
             throw new CakeNotFoundException("A cake with id: " + id + " was not found.");
         }
-        Cake updatedCake = new Cake(id, cake.getType(), cake.getFrosting(), cake.getFrostingColor(), cake.getLayers(), cake.getHasTopping(), cake.getHasFruit(), cake.getIsTiered());
-        return cakeRepository.save(updatedCake);
+        cake.setId(id);
+       return cakeRepository.save(cake);
     }
 
     public Cake patch(Cake cake, UUID id) {
@@ -82,12 +77,7 @@ public class CakeService {
         return cakeRepository.save(updatedCake);
     }
 
-    public Cake delete(UUID id) {
-        Optional<Cake> cake = cakeRepository.findById(id);
-        if (cake.isEmpty()) {
-            throw new CakeNotFoundException("A cake with id: " + id + " was not found.");
-        }
-        cakeRepository.delete(cake.get());
-        return cake.get();
+    public void delete(UUID id) {
+        cakeRepository.deleteById(id);
     }
 }

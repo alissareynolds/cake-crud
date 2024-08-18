@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.ListResourceBundle;
 import java.util.UUID;
 
 @RestController
@@ -44,14 +45,9 @@ public class CakeController {
     }
 
     @GetMapping("/type/{type}")
-    public ResponseEntity<Cake> getCakeByType(@PathVariable String type) {
-        Cake cake;
-        try {
-            cake = cakeService.getByType(type);
-        } catch (CakeNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(cake, HttpStatus.OK);
+    public ResponseEntity<List<Cake>> getCakeByType(@PathVariable String type) {
+        List<Cake> cakes = cakeService.getByType(type);
+        return new ResponseEntity<>(cakes, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -78,12 +74,7 @@ public class CakeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Cake> deleteCake(@PathVariable UUID id) {
-        Cake cake;
-        try {
-            cake = cakeService.delete(id);
-        } catch (CakeNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(cake, HttpStatus.OK);
+        cakeService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
