@@ -63,7 +63,7 @@ public class CakeService {
             updatedCake.setFrostingColor(cake.getFrostingColor());
         }
         if (cake.getLayers() != null) {
-            updatedCake.setFrostingColor(cake.getFrostingColor());
+            updatedCake.setLayers(cake.getLayers());
         }
         if (cake.getHasTopping() != null) {
             updatedCake.setHasTopping(cake.getHasTopping());

@@ -90,6 +90,22 @@ class CakeServiceTest {
         Mockito.when(mockCakeRepository.findById(id)).thenReturn(Optional.empty());
         CakeNotFoundException exception = assertThrows(CakeNotFoundException.class, () -> cakeService.patch(input, id));
         assertEquals("A cake with id: " + id + " was not found.", exception.getMessage());
+    }
 
+    @Test
+    public void patch_shouldReturnUpdatedType() {
+        Cake input = new Cake();
+        input.setType("Raspberry");
+        Mockito.when(mockCakeRepository.findById(recordWithId.getId())).thenReturn(Optional.of(recordWithId));
+        Mockito.when(mockCakeRepository.save(Mockito.any())).thenAnswer(i -> i.getArguments()[0]);
+        Cake response = cakeService.patch(input, recordWithId.getId());
+        assertEquals(recordWithId.getId(), response.getId());
+        assertEquals("Raspberry", response.getType());
+        assertEquals("chocolate", response.getFrosting());
+        assertEquals("brown", response.getFrostingColor());
+        assertEquals(3, response.getLayers());
+        assertEquals(true, response.getHasTopping());
+        assertEquals(false, response.getHasFruit());
+        assertEquals(false, response.getIsTiered());
     }
 }
