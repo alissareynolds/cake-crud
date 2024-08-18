@@ -108,4 +108,114 @@ class CakeServiceTest {
         assertEquals(false, response.getHasFruit());
         assertEquals(false, response.getIsTiered());
     }
+
+
+    @Test
+    public void patch_shouldReturnUpdatedFrosting() {
+        Cake input = new Cake();
+        input.setFrosting("vanilla");
+        Mockito.when(mockCakeRepository.findById(recordWithId.getId())).thenReturn(Optional.of(recordWithId));
+        Mockito.when(mockCakeRepository.save(Mockito.any())).thenAnswer(i -> i.getArguments()[0]);
+        Cake response = cakeService.patch(input, recordWithId.getId());
+        assertEquals(recordWithId.getId(), response.getId());
+        assertEquals("German Chocolate", response.getType());
+        assertEquals("vanilla", response.getFrosting());
+        assertEquals("brown", response.getFrostingColor());
+        assertEquals(3, response.getLayers());
+        assertEquals(true, response.getHasTopping());
+        assertEquals(false, response.getHasFruit());
+        assertEquals(false, response.getIsTiered());
+    }
+
+    @Test
+    public void patch_shouldReturnUpdatedFrostingColor() {
+        Cake input = new Cake();
+        input.setFrostingColor("white");
+        Mockito.when(mockCakeRepository.findById(recordWithId.getId())).thenReturn(Optional.of(recordWithId));
+        Mockito.when(mockCakeRepository.save(Mockito.any())).thenAnswer(i -> i.getArguments()[0]);
+        Cake response = cakeService.patch(input, recordWithId.getId());
+        assertEquals(recordWithId.getId(), response.getId());
+        assertEquals("German Chocolate", response.getType());
+        assertEquals("chocolate", response.getFrosting());
+        assertEquals("white", response.getFrostingColor());
+        assertEquals(3, response.getLayers());
+        assertEquals(true, response.getHasTopping());
+        assertEquals(false, response.getHasFruit());
+        assertEquals(false, response.getIsTiered());
+    }
+
+    @Test
+    public void patch_shouldReturnUpdatedLayers() {
+        Cake input = new Cake();
+        input.setLayers(4);
+        Mockito.when(mockCakeRepository.findById(recordWithId.getId())).thenReturn(Optional.of(recordWithId));
+        Mockito.when(mockCakeRepository.save(Mockito.any())).thenAnswer(i -> i.getArguments()[0]);
+        Cake response = cakeService.patch(input, recordWithId.getId());
+        assertEquals(recordWithId.getId(), response.getId());
+        assertEquals("German Chocolate", response.getType());
+        assertEquals("chocolate", response.getFrosting());
+        assertEquals("brown", response.getFrostingColor());
+        assertEquals(4, response.getLayers());
+        assertEquals(true, response.getHasTopping());
+        assertEquals(false, response.getHasFruit());
+        assertEquals(false, response.getIsTiered());
+    }
+
+    @Test
+    public void patch_shouldReturnUpdatedHasTopping() {
+        Cake input = new Cake();
+        input.setHasTopping(false);
+        Mockito.when(mockCakeRepository.findById(recordWithId.getId())).thenReturn(Optional.of(recordWithId));
+        Mockito.when(mockCakeRepository.save(Mockito.any())).thenAnswer(i -> i.getArguments()[0]);
+        Cake response = cakeService.patch(input, recordWithId.getId());
+        assertEquals(recordWithId.getId(), response.getId());
+        assertEquals("German Chocolate", response.getType());
+        assertEquals("chocolate", response.getFrosting());
+        assertEquals("brown", response.getFrostingColor());
+        assertEquals(3, response.getLayers());
+        assertEquals(false, response.getHasTopping());
+        assertEquals(false, response.getHasFruit());
+        assertEquals(false, response.getIsTiered());
+    }
+
+    @Test
+    public void patch_shouldReturnUpdatedHasFruit() {
+        Cake input = new Cake();
+        input.setHasFruit(true);
+        Mockito.when(mockCakeRepository.findById(recordWithId.getId())).thenReturn(Optional.of(recordWithId));
+        Mockito.when(mockCakeRepository.save(Mockito.any())).thenAnswer(i -> i.getArguments()[0]);
+        Cake response = cakeService.patch(input, recordWithId.getId());
+        assertEquals(recordWithId.getId(), response.getId());
+        assertEquals("German Chocolate", response.getType());
+        assertEquals("chocolate", response.getFrosting());
+        assertEquals("brown", response.getFrostingColor());
+        assertEquals(3, response.getLayers());
+        assertEquals(true, response.getHasTopping());
+        assertEquals(true, response.getHasFruit());
+        assertEquals(false, response.getIsTiered());
+    }
+
+
+    @Test
+    public void patch_shouldReturnUpdatedIsTiered() {
+        Cake input = new Cake();
+        input.setIsTiered(true);
+        Mockito.when(mockCakeRepository.findById(recordWithId.getId())).thenReturn(Optional.of(recordWithId));
+        Mockito.when(mockCakeRepository.save(Mockito.any())).thenAnswer(i -> i.getArguments()[0]);
+        Cake response = cakeService.patch(input, recordWithId.getId());
+        assertEquals(recordWithId.getId(), response.getId());
+        assertEquals("German Chocolate", response.getType());
+        assertEquals("chocolate", response.getFrosting());
+        assertEquals("brown", response.getFrostingColor());
+        assertEquals(3, response.getLayers());
+        assertEquals(true, response.getHasTopping());
+        assertEquals(false, response.getHasFruit());
+        assertEquals(true, response.getIsTiered());
+    }
+
+    @Test
+    public void delete_callsRepositoryDeleteMethod() {
+        cakeService.delete(id);
+        Mockito.verify(mockCakeRepository).deleteById(id);
+    }
 }
